@@ -74,3 +74,19 @@ public class BranchUser implements CommandLineRunner{
     <version>3.0.2-RELEASE</version>
 </dependency>
 ```
+> 在引用了easy-trunker的情况下，就不需要再引入easy-branker了。
+
+如果你是在springboot中使用easy-trunker，easy-trunker默认会扫描启动类包路径下所有子包中声明了@Tranker注解的接口并生成代理，这是对mybatis无脑代理你的接口的一个优化，而且不需要你去配置。
+
+如果你想扫描到不在启动类包路径下的接口，怎么办呢？两种方式：
+
+#### 1.引入@TrunkerScan注解
+```
+@TrunkerScan({"com.XXXX.XXXX","com.WWW.WWW"})
+```
+#### 2.在@ComponentScan注解中指定
+
+```
+@ComponentScan({"com.XXXX.XXXX","com.WWW.WWW"})
+```
+
