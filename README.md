@@ -1,37 +1,76 @@
 # easy-trunker
 
-#### 介绍
-一个参考了mybatis声明接口的方式调用easy-brancher的分支模块增强工具，你可以像声明mybatis接口一样编写分支业务接口方法，然后在主干业务里调用它。就算不用easy-trunker，你也应该看看它的源码，对于学习mybatis源码有非常大的帮助。
+## 介绍
+一个参考了mybatis声明接口的方式调用easy-brancher(项目地址：https://gitee.com/xiaoyudeguang/easy-brancher)的分支模块增强工具，你可以像声明mybatis接口一样编写分支业务接口方法，然后在主干业务里调用它。就算不用easy-trunker，你也应该看看它的源码，对于学习mybatis源码有非常大的帮助。
 
-#### 软件架构
-软件架构说明
+## 使用说明
+### 你可以像之前那样声明用easy-brancher来构件分支。
+```
+@Brancher(key = "one", args = {"name"}, todo = { "" })
+public class BranchHandlerOne extends AbstractBrancher{
+     @Override
+     public Object doService(EasyMap params) throws Exception {
+	  System.out.println("111111:"+params);
+	  return "11111";
+     }
+}
+```
+```
+@Brancher(key = "two", args = {"name"}, todo = { "" })
+public class BranchHandlerTwo extends AbstractBrancher{
+     @Override
+     public Object doService(EasyMap params) throws Exception {
+	  System.out.println("22222:"+params);
+	  return "22222";
+     }
+}
+```
+### 主业务调用分支业务
+#### 1.spring容器注入的方式
+```
+@Autowired
+private IBrancher brancher;
+
+@Override
+public void run(String... args) throws Exception {
+    brancher.doService("one", EasyMap.create().add("name", "张三").add("age", "18"));
+}
+```
+#### 2.通过分支工具调用
+```
+BranchUtils.doService("two", EasyMap.create().add("name", "张三").add("age", "18"));
+```
+#### 3.easy-trunker方式调用分支业务
+
+```
+@Trunker(todo = { "分支声明接口" })
+public interface BranchCaller extends IBrancher{
+
+	@BranchKey(keys = {"one","two"}, todo = {"可以在在keys参数中声明调用哪些分支"})
+	public Object call(String name, int age);
+}
+```
+
+```
+@EasyBean(todo = { "主干业务调用分支接口demo" })
+public class BranchUser implements CommandLineRunner{
+
+	@Autowired
+	private BranchCaller caller;
+
+	@Override
+	public void run(String... args) throws Exception {
+	    caller.call("张三2", 15);
+	}
+}
+```
 
 
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
-
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+## Maven引用(如果版本有变化，请自行去maven中央仓库引用)
+```
+<dependency>
+    <groupId>io.github.xiaoyudeguang</groupId>
+    <artifactId>easy-brancher</artifactId>
+    <version>3.0.0-RELEASE</version>
+</dependency>
+```
