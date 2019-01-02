@@ -70,7 +70,7 @@ public class BranchUser implements CommandLineRunner{
 ```
 <dependency>
     <groupId>io.github.xiaoyudeguang</groupId>
-    <artifactId>easy-brancher</artifactId>
+    <artifactId>easy-trunker</artifactId>
     <version>3.0.2-RELEASE</version>
 </dependency>
 ```
