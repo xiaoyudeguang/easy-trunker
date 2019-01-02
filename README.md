@@ -1,7 +1,7 @@
 # easy-trunker
 
 ## 介绍
-一个参考了mybatis声明接口的方式调用easy-brancher( 项目地址：https://gitee.com/xiaoyudeguang/easy-brancher )的分支模块增强工具，你可以像声明mybatis接口一样编写分支业务接口方法，然后在主干业务里调用它。就算不用easy-trunker，你也应该看看它的源码，对于学习mybatis源码有非常大的帮助。
+一个参考了mybatis声明接口的方式调用easy-brancher( 项目地址：https://gitee.com/xiaoyudeguang/easy-brancher )的分支模块增强工具，你可以像声明mybatis接口一样编写分支业务接口方法，然后在主干业务里调用它。就算不用easy-trunker，你也应该看看它的源码，对于学习mybatis源码有非常大的帮助。码云地址：https://gitee.com/xiaoyudeguang/easy-trunker
 
 ## 使用说明
 ### 你可以像之前那样声明用easy-brancher来构件分支。
